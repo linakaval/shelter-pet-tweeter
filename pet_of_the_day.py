@@ -55,7 +55,7 @@ def main():
             with open(tempPic, 'wb') as image:
                 for chunk in pic.iter_content():
                     image.write(chunk)
-            api.update_with_media(tempPic, status='CACHS Pet of the Day\nName: {}\nSpecies: {}\nGender: {}\nBreed: {}\nAge: {}\nAdopt this cute {} today!'.format(randomPet[0], randomPet[1], randomPet[2], randomPet[3], randomPet[4], randomPet[0]))
+            api.update_with_media(tempPic, status='CACHS Pet of the Day\nName: {}\nSpecies: {}\nGender: {}\nBreed: {}\nAge: {}\nAdopt this cute {} today!'.format(randomPet[0], randomPet[1], randomPet[2], randomPet[3], randomPet[4], randomPet[1]))
         os.remove(tempPic)
     
     print(randomPet)
