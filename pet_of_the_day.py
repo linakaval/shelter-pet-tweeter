@@ -16,7 +16,7 @@ def getAnimals(url, animals):
         page = s.get(url)
         if page.status_code == 200:
             
-            soup = BeautifulSoup(page.content, 'html.parser')
+            soup = BeautifulSoup(page.text, 'html.parser')
             divs  = soup.findAll("div", {'class': 'list-item'})
             #print(divs)
 
