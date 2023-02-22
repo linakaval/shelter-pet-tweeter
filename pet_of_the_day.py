@@ -4,8 +4,9 @@ import random
 import tweepy
 import os
 import sys
+import time
 sys.path.append("/Users/linakaval/Documents/Github/")
-import auth_credentials #module with credentials
+import example_auth_credentials #module with credentials
 
 DOG_URL = 'https://ws.petango.com/webservices/adoptablesearch/wsAdoptableAnimals2.aspx?species=dog&gender=All&agegroup=All&location=&site=&onhold=All&orderby=ID&colnum=5&authkey=ho44bl6bmphbs21iior7k671v2gh2cf8r70636k2i7rcvs1br0&recAmount=&detailsInPopup=Yes&featuredPet=Include&stageID='
 CAT_URL = 'https://ws.petango.com/webservices/adoptablesearch/wsAdoptableAnimals2.aspx?species=cat&gender=All&agegroup=All&location=&site=&onhold=All&orderby=ID&colnum=5&authkey=ho44bl6bmphbs21iior7k671v2gh2cf8r70636k2i7rcvs1br0&recAmount=&detailsInPopup=Yes&featuredPet=Include&stageID='
@@ -32,7 +33,7 @@ def getAnimals(url, animals):
 
 
 def main():
-    cred = auth_credentials.twitter()
+    cred = example_auth_credentials.twitter()
 
     # Authenticate to Twitter
     auth = tweepy.OAuthHandler(cred['CONSUMER_KEY'], cred['CONSUMER_SECRET'])
@@ -55,9 +56,9 @@ def main():
             with open(tempPic, 'wb') as image:
                 for chunk in pic.iter_content():
                     image.write(chunk)
-            api.update_with_media(tempPic, status='CACHS Pet of the Day\nName: {}\nSpecies: {}\nGender: {}\nBreed: {}\nAge: {}\nAdopt this cute {} today!'.format(randomPet[0], randomPet[1], randomPet[2], randomPet[3], randomPet[4], randomPet[1]))
+            media_id = api.chunked_upload(tempPic).media_id
+            api.update_status(status='CACHS Pet of the Day\nName: {}\nSpecies: {}\nGender: {}\nBreed: {}\nAge: {}\nAdopt this cute {} today!'.format(randomPet[0], randomPet[1], randomPet[2], randomPet[3], randomPet[4], randomPet[1].lower()), media_ids=[media_id])
         os.remove(tempPic)
-    
     print(randomPet)
 
     
